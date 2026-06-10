@@ -399,53 +399,23 @@ for(let i=0;i<20;i++){
 
 // microphone
 
-const startBtn = document.getElementById("startBtn");
+navigator.mediaDevices.getUserMedia({audio:true})
+.then(stream=>{
 
-startBtn.addEventListener("click", async () => {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: true
-        });
+const audioContext =
+new (window.AudioContext||window.webkitAudioContext)();
 
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const analyser=
+audioContext.createAnalyser();
 
-        await audioContext.resume();
+const mic=
+audioContext.createMediaStreamSource(stream);
 
-        const analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
+mic.connect(analyser);
 
-        const mic = audioContext.createMediaStreamSource(stream);
-        mic.connect(analyser);
+const data=
+new Uint8Array(analyser.frequencyBinCount);
 
-        const data = new Uint8Array(analyser.frequencyBinCount);
-
-        function detectBlow() {
-            analyser.getByteFrequencyData(data);
-
-            let volume = 0;
-            for (let i = 0; i < data.length; i++) {
-                volume += data[i];
-            }
-
-            volume /= data.length;
-
-            console.log(volume); // debug
-
-            // Giảm ngưỡng cho điện thoại
-            if (volume > 15) {
-                blowOutCandle();
-                return;
-            }
-
-            requestAnimationFrame(detectBlow);
-        }
-
-        detectBlow();
-
-    } catch (err) {
-        alert("Không thể truy cập microphone: " + err.message);
-    }
-});
 
 function detect(){
 

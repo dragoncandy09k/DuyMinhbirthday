@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#2f2c35;
+    overflow:hidden;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-family:Arial, sans-serif;
+}
+
+.title{
+    color:#f7c56f;
+    font-size:70px;
+    font-family:cursive;
+    text-shadow:
+        0 0 10px #ffb300,
+        0 0 20px #ffb300,
+        0 0 40px #ff9900;
+    animation: glow 2s infinite alternate;
+}
+
+.name{
+    color:white;
+    font-size:40px;
+    margin-top:10px;
+    margin-bottom:40px;
+}
+
+@keyframes glow{
+    from{transform:scale(1);}
+    to{
+        transform:scale(1.03);
+        text-shadow:
+            0 0 15px gold,
+            0 0 30px orange,
+            0 0 60px orange;
+    }
+}
+
+/* Cake */
+
+.cake{
+    position:relative;
+    width:300px;
+    height:220px;
+}
+
+
+.layer{
+    position:absolute;
+    width:280px;
+    height:120px;
+    background:#3a2415;
+    bottom:15px;
+    left:10px;
+    border-radius:0 0 20px 20px;
+    box-shadow: inset 0 -5px 0 rgba(255,255,255,.15);
+}
+
+.layer::before,
+.layer::after{
+    content:"";
+    position:absolute;
+    left:0;
+    width:100%;
+    height:4px;
+    background:rgba(255,255,255,.15);
+}
+
+.layer::before{
+    top:35px;
+}
+
+.layer::after{
+    top:75px;
+}
+
+/* cream */
+
+.cream{
+    position:absolute;
+    z-index:1;
+    width:280px;
+    height:70px;
+    background:#f5f0e5;
+    top:20px;
+    left:10px;
+    border-radius:50% 50% 15px 15px;
+}
+/* phần kem chảy */
+.cream::before{
+    content:"";
+    position:absolute;
+    width:30px;
+    height:60px;
+    background:#f5f0e5;
+    z-index:1;
+    right:40px; /* vị trí giọt kem */
+    top:35px;
+    border-radius:0 0 20px 15px;
+}
+
+.cream::after{
+    content:"";
+    position:absolute;
+    width:35px;
+    height:80px;
+    background:#f5f0e5;
+    z-index:1;
+    right:100px; /* vị trí giọt kem */
+    top:35px;
+    border-radius:0 0 30px 20px;
+}
+
+.drip{
+    position:absolute;
+    background:#f5f0e5;
+    border-radius:20px;
+}
+
+.d1{
+    width:40px;
+    height:45px;
+    left:30px;
+    top:45px;
+}
+
+.d2{
+    width:35px;
+    height:35px;
+    left:120px;
+    top:50px;
+}
+
+.d3{
+    width:50px;
+    height:50px;
+    right:40px;
+    top:40px;
+}
+
+/* Candle */
+
+.candle{
+    position:absolute;
+    width:16px;
+    height:60px;
+    background:#c41f1f;
+    left:142px;
+    top:-15px;
+    border-radius:4px;
+}
+
+.sprinkle{
+    position:absolute;
+    z-index:2;
+    top:45px;
+    left:150px;
+    width:15px;
+    height:4px;
+    border-radius:2px;
+    background:#ff69b4;
+    transform:rotate(30deg);
+}
+
+.s1{
+    background:#ff69b4;
+    z-index:2;
+    left:50px;
+    top:50px;
+    transform:rotate(25deg);
+}
+
+.s2{
+    background:#4ecdc4;
+    z-index:2;
+    left:100px;
+    top:30px;
+    transform:rotate(-20deg);
+}
+
+.s3{
+    background:#ffcb3d;
+    z-index:2;
+    left:200px;
+    top:40px;
+    transform:rotate(45deg);
+}
+.s4{
+    background:#ff6f69;
+    z-index:2;
+    left:240px;
+    top:60px;
+    transform:rotate(-30deg);
+}
+
+.flame{
+    position:absolute;
+    width:20px;
+    height:35px;
+    background:rgb(255, 196, 0);
+    border-radius:50% 50% 50% 50%;
+    left:-2px;
+    top:-25px;
+    box-shadow:
+        0 0 20px rgb(255, 60, 0),
+        0 0 40px gold;
+    animation:flicker .15s infinite;
+}
+
+@keyframes flicker{
+    50%{
+        transform:translateX(2px) scale(1.05);
+    }
+}
+
+.hidden{
+    display:none;
+}
+
+.message{
+    position:absolute;
+    top:82%; /* xuống thấp hơn */
+    left:50%;
+    transform:translate(-50%, -50%);
+    color:white;
+    font-size:50px;
+    text-align:center;
+    white-space: nowrap;
+    display:none;
+    animation:pop .8s ease forwards;
+    z-index:999;
+}
+
+@keyframes pop{
+    from{
+        transform:translate(-50%, -50%) scale(0.5);
+        opacity:0;
+    }
+    to{
+        transform:translate(-50%, -50%) scale(1);
+        opacity:1;
+    }
+}
+
+.balloon{
+    position:absolute;
+    z-index:10;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    animation: float linear infinite;
+}
+
+/* Nút buộc bóng */
+.balloon::before{
+    content:"";
+    position:absolute;
+    bottom:-6px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:5px solid transparent;
+    border-right:5px solid transparent;
+    border-top:10px solid currentColor;
+}
+
+/* Dây bóng */
+.balloon::after{
+    content:"";
+    position:absolute;
+    top:50px;
+    left:50%;
+    transform:translateX(-50%);
+    width:2px;
+    height:60px;
+    background:rgba(255,255,255,0.8);
+}
+
+@keyframes float{
+    0%{
+        transform:
+            translateY(120vh)
+            rotate(-3deg);
+    }
+
+    25%{
+        transform:
+            translateY(60vh)
+            translateX(-15px)
+            rotate(3deg);
+    }
+
+    50%{
+        transform:
+            translateY(0)
+            translateX(15px)
+            rotate(-2deg);
+    }
+
+    75%{
+        transform:
+            translateY(-60vh)
+            translateX(-10px)
+            rotate(2deg);
+    }
+
+    100%{
+        transform:
+            translateY(-120vh)
+            translateX(10px)
+            rotate(-3deg);
+    }
+}
+
+.info{
+    margin-top:20px;
+    color:#ddd;
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="title">Happy Birthday</h1>
+<div class="name"> <b> Duy Minh </div>
+
+<div class="cake">
+    <div class="sprinkle"></div>
+    <div class="sprinkle s1"></div>
+    <div class="sprinkle s2"></div>
+    <div class="sprinkle s3"></div>
+    <div class="sprinkle s4"></div>
+    <div class="sprinkle s5"></div>
+    
+
+    <div class="cream"></div>
+
+    <div class="drip d1"></div>
+    <div class="drip d2"></div>
+    <div class="drip d3"></div>
+
+    <div class="layer"></div>
+
+    <div class="candle">
+        <div class="flame" id="flame"></div>
+    </div>
+
+    <div class="plate"></div>
+</div>
+
+<div class="message" id="message">
+🎉Chúc Minh múp thêm tuổi mới🎂
+</div>
+
+<script>
+
+// balloons
+
+for(let i=0;i<20;i++){
+
+    let b=document.createElement("div");
+
+    b.className="balloon";
+
+    const hue=Math.random()*360;
+
+    b.style.left=Math.random()*100+"vw";
+
+    b.style.background=`hsl(${hue},80%,60%)`;
+
+    b.style.color=`hsl(${hue},80%,60%)`;
+
+    b.style.animationDuration=
+        (8+Math.random()*8)+"s";
+
+    b.style.animationDelay=
+        (-Math.random()*10)+"s";
+
+    document.body.appendChild(b);
+}
+
+// microphone
+
+navigator.mediaDevices.getUserMedia({audio:true})
+.then(stream=>{
+
+const audioContext =
+new (window.AudioContext||window.webkitAudioContext)();
+
+const analyser=
+audioContext.createAnalyser();
+
+const mic=
+audioContext.createMediaStreamSource(stream);
+
+mic.connect(analyser);
+
+const data=
+new Uint8Array(analyser.frequencyBinCount);
+
+function detect(){
+
+    analyser.getByteFrequencyData(data);
+
+    let volume =
+        data.reduce((a,b)=>a+b)/data.length;
+
+    if(volume>45){
+
+        document
+            .getElementById("flame")
+            .classList.add("hidden");
+
+        document
+            .getElementById("message")
+            .style.display="block";
+
+    }
+
+    requestAnimationFrame(detect);
+}
+
+detect();
+
+})
+.catch(()=>{
+    alert("Hãy cho phép microphone!");
+});
+
+</script>
+
+</body>
+</html>

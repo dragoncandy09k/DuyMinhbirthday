@@ -399,9 +399,12 @@ for(let i=0;i<20;i++){
 
 // microphone
 
-navigator.mediaDevices.getUserMedia({audio:true})
-.then(stream=>{
-
+button.addEventListener("click", async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true
+    });
+});
+    
 const audioContext =
 new (window.AudioContext||window.webkitAudioContext)();
 
